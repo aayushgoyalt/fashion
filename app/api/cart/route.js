@@ -40,19 +40,40 @@ export async function POST(request) {
     }
 
     const { items } = await request.json();
+    console.log("POST /api/cart received items:", JSON.stringify(items, null, 2));
     if (!Array.isArray(items)) {
       return NextResponse.json({ error: "Invalid items structure" }, { status: 400 });
     }
 
     await connectToDatabase();
 
-    // Map items to schema format
-    const formattedItems = items.map((item) => ({
-      product: item.product._id || item.product,
-      quantity: item.quantity,
-      color: item.color,
-      size: item.size,
-    }));
+    // Map items to schema format with strict validation and fallbacks
+    const formattedItems = items
+      .map((item) => {
+        if (!item.product) return null;
+        
+        let productId = null;
+        if (typeof item.product === "object") {
+          productId = item.product._id || item.product.id;
+        } else if (typeof item.product === "string") {
+          productId = item.product;
+        }
+
+        // Check if resolved product ID is a valid 24-character hex string
+        const isValidObjectId = productId && /^[0-9a-fA-F]{24}$/.test(productId);
+        if (!isValidObjectId) {
+          console.warn("[CART SYNC] Skipping item with invalid product ID:", productId);
+          return null;
+        }
+
+        return {
+          product: productId,
+          quantity: Number(item.quantity) || 1,
+          color: item.color || "Default",
+          size: item.size || "O/S",
+        };
+      })
+      .filter(Boolean);
 
     let cart = await Cart.findOne({ user: user._id });
     if (cart) {
@@ -72,6 +93,9 @@ export async function POST(request) {
     return NextResponse.json({ items: updatedCart.items }, { status: 200 });
   } catch (error) {
     console.error("Cart POST API error:", error);
-    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+    if (error.name === "ValidationError") {
+      console.error("Mongoose ValidationError details:", JSON.stringify(error.errors, null, 2));
+    }
+    return NextResponse.json({ error: error.message || "Internal server error" }, { status: 500 });
   }
 }

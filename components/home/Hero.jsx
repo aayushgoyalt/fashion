@@ -4,7 +4,8 @@ import { useEffect, useRef } from "react";
 import Link from "next/link";
 import gsap from "gsap";
 import { ArrowRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 export default function Hero() {
   const containerRef = useRef(null);
@@ -82,14 +83,15 @@ export default function Hero() {
         </p>
 
         <div ref={ctaRef} className="opacity-0">
-          <Button
-            asChild
-            className="bg-white hover:bg-camel text-primary hover:text-white rounded-full px-8 py-6 font-semibold uppercase tracking-widest text-xs transition-all shadow-lg hover:shadow-camel/20"
+          <Link
+            href="/shop"
+            className={cn(
+              buttonVariants({ variant: "default" }),
+              "bg-white hover:bg-camel text-primary hover:text-white rounded-full px-8 py-6 font-semibold uppercase tracking-widest text-xs transition-all shadow-lg hover:shadow-camel/20 inline-flex items-center gap-2 h-auto"
+            )}
           >
-            <Link href="/shop" className="flex items-center gap-2">
-              Explore The Collection <ArrowRight size={14} />
-            </Link>
-          </Button>
+            Explore The Collection <ArrowRight size={14} />
+          </Link>
         </div>
       </div>
 

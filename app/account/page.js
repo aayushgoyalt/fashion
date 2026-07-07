@@ -582,13 +582,13 @@ export default function AccountPage() {
                   <h2 className="font-heading text-xl font-bold">My Wishlist</h2>
                 </div>
 
-                {profile?.wishlist && profile.wishlist.length > 0 ? (
+                {profile?.wishlist && profile.wishlist.filter(Boolean).length > 0 ? (
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-                    {profile.wishlist.map((prod) => (
+                    {profile.wishlist.filter(Boolean).map((prod) => (
                       <div key={prod._id} className="relative group">
                         <div className="aspect-[3/4] overflow-hidden rounded-xl bg-[#FAF6EE] border border-[#EAE2DC]">
                           <img
-                            src={prod.images[0]}
+                            src={prod.images?.[0]}
                             alt={prod.title}
                             className="w-full h-full object-cover group-hover:scale-102 transition-transform duration-700"
                           />

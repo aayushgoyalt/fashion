@@ -9,7 +9,8 @@ import Footer from "@/components/layout/Footer";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowRight, Compass, Heart, Layers, Send, Sparkles, Star } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 // Fallback mockup data in case the local database is not connected/seeded yet
 const MOCK_PRODUCTS = [
@@ -222,12 +223,15 @@ export default function HomePage() {
             Enter code <span className="text-white font-bold bg-white/10 px-2 py-0.5 rounded">LUXE2000</span> at checkout to receive flat Rs. 2,000 off orders exceeding Rs. 15,000.
           </p>
           <div className="pt-4">
-            <Button
-              asChild
-              className="bg-white hover:bg-camel text-primary hover:text-white rounded-full px-8 py-5 text-xs font-semibold uppercase tracking-widest transition-all"
+            <Link
+              href="/shop"
+              className={cn(
+                buttonVariants({ variant: "default" }),
+                "bg-white hover:bg-camel text-primary hover:text-white rounded-full px-8 py-5 text-xs font-semibold uppercase tracking-widest transition-all h-auto"
+              )}
             >
-              <Link href="/shop">Access The Private Sale</Link>
-            </Button>
+              Access The Private Sale
+            </Link>
           </div>
         </div>
       </section>

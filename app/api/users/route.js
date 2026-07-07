@@ -32,7 +32,7 @@ export async function GET() {
           name: dbUser.name,
           email: dbUser.email,
           role: dbUser.role,
-          wishlist: dbUser.wishlist || [],
+          wishlist: (dbUser.wishlist || []).filter(Boolean),
         },
         savedAddresses: dbUser.savedAddresses || [],
         orders: orders || [],
