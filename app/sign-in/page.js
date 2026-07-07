@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, Suspense } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
@@ -18,7 +18,7 @@ const loginSchema = z.object({
   password: z.string().min(1, "Password is required"),
 });
 
-export default function SignInPage() {
+function SignInForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl") || "/";
@@ -70,16 +70,16 @@ export default function SignInPage() {
         </div>
 
         <div className="w-full bg-white border border-[#EAE2DC] p-8 rounded-2xl shadow-sm space-y-6">
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 text-left">
             <div className="space-y-2">
-              <Label htmlFor="email" className="text-xs uppercase tracking-wider text-muted-foreground">
+              <Label htmlFor="email" className="text-xs uppercase tracking-wider text-muted-foreground font-bold">
                 Email Address
               </Label>
               <Input
                 id="email"
                 type="email"
                 placeholder="name@example.com"
-                className="border-[#EAE2DC] focus:border-camel focus:ring-camel rounded-md"
+                className="border-[#EAE2DC] focus:border-camel focus:ring-camel rounded-md text-xs h-10"
                 disabled={isLoading}
                 {...register("email")}
               />
@@ -90,7 +90,7 @@ export default function SignInPage() {
 
             <div className="space-y-2">
               <div className="flex justify-between items-center">
-                <Label htmlFor="password" className="text-xs uppercase tracking-wider text-muted-foreground">
+                <Label htmlFor="password" className="text-xs uppercase tracking-wider text-muted-foreground font-bold">
                   Password
                 </Label>
               </div>
@@ -99,7 +99,7 @@ export default function SignInPage() {
                   id="password"
                   type={showPassword ? "text" : "password"}
                   placeholder="••••••••"
-                  className="border-[#EAE2DC] pr-10 focus:border-camel focus:ring-camel rounded-md"
+                  className="border-[#EAE2DC] pr-10 focus:border-camel focus:ring-camel rounded-md text-xs h-10"
                   disabled={isLoading}
                   {...register("password")}
                 />
@@ -134,7 +134,7 @@ export default function SignInPage() {
 
           <div className="relative flex py-2 items-center">
             <div className="flex-grow border-t border-[#EAE2DC]"></div>
-            <span className="flex-shrink mx-4 text-muted-foreground text-xs uppercase tracking-widest">
+            <span className="flex-shrink mx-4 text-muted-foreground text-[10px] uppercase tracking-widest font-bold">
               New to Aura?
             </span>
             <div className="flex-grow border-t border-[#EAE2DC]"></div>
@@ -143,7 +143,7 @@ export default function SignInPage() {
           <div className="text-center">
             <Link
               href="/sign-up"
-              className="text-xs uppercase tracking-wider text-camel hover:text-terracotta font-semibold transition-colors"
+              className="text-xs uppercase tracking-wider text-camel hover:text-terracotta font-bold transition-colors"
             >
               Create a Premium Account
             </Link>
@@ -151,5 +151,19 @@ export default function SignInPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function SignInPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="flex h-screen items-center justify-center bg-[#FAF6EE]">
+          <Loader2 className="animate-spin text-camel" size={32} />
+        </div>
+      }
+    >
+      <SignInForm />
+    </Suspense>
   );
 }

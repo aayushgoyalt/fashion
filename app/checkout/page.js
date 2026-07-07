@@ -20,6 +20,7 @@ import {
   ChevronRight,
   CheckCircle,
 } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 export default function CheckoutPage() {
   const router = useRouter();
