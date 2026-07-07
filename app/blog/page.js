@@ -6,6 +6,7 @@ import Footer from "@/components/layout/Footer";
 import Link from "next/link";
 import { Loader2, ArrowRight, BookOpen } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const MOCK_BLOGS = [
   {
@@ -71,8 +72,18 @@ export default function BlogListPage() {
         </div>
 
         {loading ? (
-          <div className="flex justify-center py-20">
-            <Loader2 className="animate-spin text-camel" size={32} />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+            {[...Array(4)].map((_, i) => (
+              <div key={i} className="bg-white border border-[#EAE2DC] rounded-2xl overflow-hidden shadow-sm flex flex-col h-full text-left space-y-4 pb-8">
+                <Skeleton className="w-full aspect-[16/10] bg-[#EAE2DC]/40" />
+                <div className="px-8 pt-4 flex-1 space-y-4">
+                  <Skeleton className="w-24 h-4 bg-[#EAE2DC]/40" />
+                  <Skeleton className="w-3/4 h-8 bg-[#EAE2DC]/40 rounded-lg" />
+                  <Skeleton className="w-full h-16 bg-[#EAE2DC]/40 rounded-lg" />
+                  <Skeleton className="w-28 h-4 bg-[#EAE2DC]/40" />
+                </div>
+              </div>
+            ))}
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-stretch">

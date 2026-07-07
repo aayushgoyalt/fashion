@@ -7,6 +7,7 @@ import Footer from "@/components/layout/Footer";
 import Link from "next/link";
 import { Loader2, ChevronLeft, Calendar, BookOpen, AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const MOCK_BLOGS = [
   {
@@ -64,8 +65,39 @@ export default function BlogDetailPage({ params: paramsPromise }) {
 
   if (loading) {
     return (
-      <div className="flex h-screen items-center justify-center bg-[#FAF6EE]">
-        <Loader2 className="animate-spin text-camel" size={32} />
+      <div className="bg-[#FCFAF7] min-h-screen text-primary overflow-x-hidden font-sans pt-24 pb-16">
+        <Navbar />
+
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8 text-left space-y-8">
+          {/* Back button skeleton */}
+          <Skeleton className="w-24 h-4 bg-[#EAE2DC]/40" />
+
+          {/* Title skeleton */}
+          <div className="space-y-4 pt-4">
+            <Skeleton className="w-16 h-3 bg-[#EAE2DC]/40" />
+            <Skeleton className="w-full h-10 bg-[#EAE2DC]/40 rounded-lg" />
+            <Skeleton className="w-2/3 h-10 bg-[#EAE2DC]/40 rounded-lg" />
+            
+            <div className="flex gap-4 pt-2">
+              <Skeleton className="w-24 h-3 bg-[#EAE2DC]/40" />
+              <Skeleton className="w-20 h-3 bg-[#EAE2DC]/40" />
+            </div>
+          </div>
+
+          {/* Banner image skeleton */}
+          <Skeleton className="w-full aspect-[16/9] rounded-2xl bg-[#EAE2DC]/40" />
+
+          {/* Body paragraph lines skeleton */}
+          <div className="space-y-3 pt-4">
+            <Skeleton className="w-full h-4 bg-[#EAE2DC]/40" />
+            <Skeleton className="w-full h-4 bg-[#EAE2DC]/40" />
+            <Skeleton className="w-11/12 h-4 bg-[#EAE2DC]/40" />
+            <Skeleton className="w-full h-4 bg-[#EAE2DC]/40" />
+            <Skeleton className="w-5/6 h-4 bg-[#EAE2DC]/40" />
+          </div>
+        </div>
+
+        <Footer />
       </div>
     );
   }

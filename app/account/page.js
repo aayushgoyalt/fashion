@@ -30,6 +30,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function AccountPage() {
   const router = useRouter();
@@ -109,8 +110,44 @@ export default function AccountPage() {
 
   if (loading || status === "loading") {
     return (
-      <div className="flex h-screen items-center justify-center bg-[#FAF6EE]">
-        <Loader2 className="animate-spin text-camel" size={32} />
+      <div className="bg-[#FCFAF7] min-h-screen text-primary overflow-x-hidden font-sans pt-24 pb-16">
+        <Navbar />
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          {/* Header Skeleton */}
+          <div className="border-b border-[#EAE2DC] pb-6 mb-8 flex justify-between items-center flex-wrap gap-4">
+            <div className="space-y-2">
+              <Skeleton className="w-24 h-3 bg-[#EAE2DC]/40" />
+              <Skeleton className="w-48 h-8 bg-[#EAE2DC]/40 rounded-lg" />
+            </div>
+            <Skeleton className="w-28 h-10 bg-[#EAE2DC]/40 rounded-full" />
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+            {/* Sidebar Skeleton */}
+            <div className="lg:col-span-1 bg-white border border-[#EAE2DC] p-5 rounded-2xl h-fit space-y-3">
+              {[...Array(5)].map((_, i) => (
+                <Skeleton key={i} className="w-full h-11 bg-[#EAE2DC]/40 rounded-xl" />
+              ))}
+            </div>
+
+            {/* Content Details Area Skeleton */}
+            <div className="lg:col-span-3 bg-white border border-[#EAE2DC] p-6 sm:p-8 rounded-2xl shadow-sm space-y-6">
+              <Skeleton className="w-32 h-6 bg-[#EAE2DC]/40" />
+              <div className="border-t border-[#EAE2DC] pt-6 space-y-4 max-w-md">
+                {[...Array(3)].map((_, i) => (
+                  <div key={i} className="space-y-2">
+                    <Skeleton className="w-20 h-3 bg-[#EAE2DC]/40" />
+                    <Skeleton className="w-full h-10 bg-[#EAE2DC]/40 rounded-lg" />
+                  </div>
+                ))}
+                <Skeleton className="w-36 h-10 bg-[#EAE2DC]/60 rounded-full" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <Footer />
       </div>
     );
   }
