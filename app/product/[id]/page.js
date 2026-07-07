@@ -27,6 +27,7 @@ import { toast } from "sonner";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const FALLBACK_PRODUCTS = [
   {
@@ -183,8 +184,89 @@ export default function ProductDetailPage({ params: paramsPromise }) {
 
   if (loading) {
     return (
-      <div className="flex h-screen items-center justify-center bg-[#FAF6EE]">
-        <Loader2 className="animate-spin text-camel" size={32} />
+      <div className="bg-[#FCFAF7] min-h-screen text-primary overflow-x-hidden font-sans pt-24 pb-16">
+        <Navbar />
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          {/* Breadcrumbs Skeleton */}
+          <div className="flex items-center space-x-2 mb-8">
+            <Skeleton className="w-12 h-3 bg-[#EAE2DC]/40" />
+            <span className="text-muted-foreground">/</span>
+            <Skeleton className="w-12 h-3 bg-[#EAE2DC]/40" />
+            <span className="text-muted-foreground">/</span>
+            <Skeleton className="w-24 h-3 bg-[#EAE2DC]/40" />
+          </div>
+
+          {/* Double-Pane Split */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
+            
+            {/* LEFT: Zoomable Gallery Pane Skeleton */}
+            <div className="space-y-4 lg:sticky lg:top-28 h-fit">
+              {/* Main Stage */}
+              <div className="relative aspect-[3/4] border border-[#EAE2DC] rounded-2xl overflow-hidden bg-[#FAF6EE] shadow-sm">
+                <Skeleton className="w-full h-full bg-[#EAE2DC]/40" />
+              </div>
+
+              {/* Thumbnail Select Carousel */}
+              <div className="flex gap-3 overflow-x-auto py-1">
+                {[...Array(3)].map((_, i) => (
+                  <Skeleton key={i} className="w-20 aspect-[3/4] rounded-lg bg-[#EAE2DC]/40" />
+                ))}
+              </div>
+            </div>
+
+            {/* RIGHT: Product Buy Box Panel Skeleton */}
+            <div className="space-y-8">
+              <div className="space-y-4">
+                <Skeleton className="w-24 h-3 bg-[#EAE2DC]/40" />
+                <Skeleton className="w-3/4 h-8 bg-[#EAE2DC]/40 rounded-lg" />
+                <Skeleton className="w-1/3 h-4 bg-[#EAE2DC]/40" />
+              </div>
+
+              <div className="space-y-2 py-4 border-y border-[#EAE2DC]">
+                <Skeleton className="w-full h-4 bg-[#EAE2DC]/40" />
+                <Skeleton className="w-full h-4 bg-[#EAE2DC]/40" />
+                <Skeleton className="w-2/3 h-4 bg-[#EAE2DC]/40" />
+              </div>
+
+              {/* Swatches Skeleton */}
+              <div className="space-y-4">
+                <div className="space-y-2">
+                  <Skeleton className="w-16 h-3 bg-[#EAE2DC]/40" />
+                  <div className="flex gap-2">
+                    <Skeleton className="w-8 h-8 rounded-full bg-[#EAE2DC]/40" />
+                    <Skeleton className="w-8 h-8 rounded-full bg-[#EAE2DC]/40" />
+                    <Skeleton className="w-8 h-8 rounded-full bg-[#EAE2DC]/40" />
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <Skeleton className="w-16 h-3 bg-[#EAE2DC]/40" />
+                  <div className="flex gap-2">
+                    <Skeleton className="w-12 h-8 rounded-md bg-[#EAE2DC]/40" />
+                    <Skeleton className="w-12 h-8 rounded-md bg-[#EAE2DC]/40" />
+                    <Skeleton className="w-12 h-8 rounded-md bg-[#EAE2DC]/40" />
+                  </div>
+                </div>
+              </div>
+
+              {/* Quantity */}
+              <div className="space-y-2">
+                <Skeleton className="w-16 h-3 bg-[#EAE2DC]/40" />
+                <Skeleton className="w-28 h-8 bg-[#EAE2DC]/40 rounded-md" />
+              </div>
+
+              {/* Buttons Skeleton */}
+              <div className="flex flex-col sm:flex-row gap-4 pt-4">
+                <Skeleton className="w-full sm:w-1/2 h-12 rounded-lg bg-[#EAE2DC]/60" />
+                <Skeleton className="w-full sm:w-1/2 h-12 rounded-lg bg-[#EAE2DC]/40" />
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <Footer />
       </div>
     );
   }
@@ -334,7 +416,7 @@ export default function ProductDetailPage({ params: paramsPromise }) {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
           
           {/* LEFT: Zoomable Gallery Pane */}
-          <div className="space-y-4">
+          <div className="space-y-4 lg:sticky lg:top-28 h-fit">
             {/* Main Stage */}
             <div className="relative aspect-[3/4] border border-[#EAE2DC] rounded-2xl overflow-hidden bg-[#FAF6EE] shadow-sm">
               <img
